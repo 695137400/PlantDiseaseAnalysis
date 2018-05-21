@@ -1,0 +1,102 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>Hello APP</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+    <link rel="stylesheet" href="../css/aui.css">
+    <style>
+        html,body{
+            height: 100%;
+        }
+        ul {
+            margin-bottom: 10px;
+        }
+
+        ul li {
+            margin: 5px 10px;
+            padding: 5px;
+            color: #000;
+            word-wrap: break-word;
+        }
+        #imgToast{
+            width: 85%;
+            height: 95%;
+            line-height: 100px;
+            text-align: center;
+            overflow: hidden;
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.48);
+            font-weight: bolder;
+            color: #fff;
+            font-size: 24px;
+            margin-left: 8px;
+        }
+    </style>
+</head>
+<body>
+<div class="aui-row aui-row-padded" id='sys-info' style="text-align: -webkit-center;">
+</div>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript">
+    apiready = function () {
+        api.execScript({
+            name: 'root',
+            script: "header_title('首页')"
+        });
+        api.setRefreshHeaderInfo({
+            visible: true,
+            bgColor: '#ccc',
+            textColor: '#fff',
+            textDown: '下拉刷新...',
+            textUp: '松开刷新...',
+            showTime: true
+        }, function(ret, err){
+            setTimeout(function () {
+                api.refreshHeaderLoadDone();//关闭刷新
+            },2000)
+        });
+    };
+
+    function openImg(imgUrl) {
+        api.openFrame({
+            name : 'imgshow',
+            url : 'ImageShow.html',
+            rect : {
+                x : 0,
+                y : 0,
+                w : 'auto',
+                h : 'auto'
+            },
+            bounces : false,
+            bgColor : 'rgba(0,0,0,0.6)',
+            pageParam : {
+                url : imgUrl
+            }
+        });
+    }
+
+    function addImg(imgData) {
+        if (imgData.data) {
+            /*api.showProgress({
+                title: '图片解析中...',
+                text: '请稍等...',
+                modal: false,
+                animationType: 'zoom'
+            });*/
+            var info = $api.byId('sys-info');
+            var infoPos = $api.offset(info);
+            var w = infoPos.w / 3;
+            var img =
+                '<div class="aui-col-xs-4"  onclick="openImg(\'' + imgData.data + '\')">' +
+                '<div  id="imgToast">分析中...</div>'+
+                '    <img style="max-height: 120px;max-width: 120px;background-image:url(\'' + imgData.data + '\');background-repeat: round;height: ' + w + 'px;width: ' + w + 'px;">' +
+                '</div>';
+            $api.append(info, img);
+        }
+    }
+</script>
+</html>
