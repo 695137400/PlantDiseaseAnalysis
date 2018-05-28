@@ -1,12 +1,8 @@
 package com.operation;
 
 import android.app.Application;
-
 import com.uzmap.pkg.openapi.APICloud;
 import com.uzmap.pkg.uzkit.request.APICloudHttpClient;
-
-import java.util.Locale;
-import java.util.ResourceBundle;
 
 /**
  * 本项目的Application，需要在该类中初始化APICloud
